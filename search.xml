@@ -64,6 +64,7 @@
       </categories>
       <tags>
         <tag>JS手写</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -89,6 +90,43 @@
       <tags>
         <tag>前端</tag>
         <tag>Vue源码</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>webpack的简易实现</title>
+    <url>/2023/04/04/webpack%E7%9A%84%E7%AE%80%E6%98%93%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前端工程化中，构建工具是核心，虽然目前已经有许多构建工具如vite、esbuild等，但由于webpack周边完善的生态，它仍然是一个主流的JS打包工具。为了更好的了解webpack，本文将依据webpack构建流程来实现一个简易的demo。</p>
+<span id="more"></span>
+
+<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><blockquote>
+<p>初始化项目</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">pnpm init <span class="comment">// 使用pnpm初始化一个项目</span></span><br><span class="line">pnpm install webpack <span class="comment">// 安装依赖</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化完依赖后，可以按照以下目录结构添加文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">├── node_modules</span><br><span class="line">├── package-lock.<span class="property">json</span></span><br><span class="line">├── package.<span class="property">json</span></span><br><span class="line">├── webpack.<span class="property">config</span>.<span class="property">js</span> #配置文件</span><br><span class="line">├── <span class="keyword">debugger</span>.<span class="property">js</span> #测试文件</span><br><span class="line">└── src # 源码目录</span><br><span class="line">     |── index.<span class="property">js</span></span><br><span class="line">     |── name.<span class="property">js</span></span><br><span class="line">     └── age.<span class="property">js</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>webpack.config.js</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WebpackRunPlugin</span> &#123;</span><br><span class="line">    <span class="title function_">apply</span>(<span class="params">compiler</span>) &#123;</span><br><span class="line">        compiler.<span class="property">hooks</span>.<span class="property">run</span>.<span class="title function_">tap</span>(<span class="string">&#x27;WebpackRunPlugin&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;开始编译&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WebpackDonePlugin</span> &#123;</span><br><span class="line">    <span class="title function_">apply</span>(<span class="params">compiler</span>) &#123;</span><br><span class="line">        compiler.<span class="property">hooks</span>.<span class="property">done</span>.<span class="title function_">tap</span>(<span class="string">&#x27;WebpackDonePlugin&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;结束编译&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">loader1</span> = (<span class="params">source</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> source + <span class="string">&#x27;//给你的代码加点注释：loader1&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">loader2</span> = (<span class="params">source</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> source + <span class="string">&#x27;//给你的代码加点注释：loader2&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;development&#x27;</span>, <span class="comment">// 防止代码被压缩</span></span><br><span class="line">    <span class="attr">entry</span>: <span class="string">&#x27;./src/index.js&#x27;</span>, <span class="comment">// 入口文件</span></span><br><span class="line">    <span class="attr">module</span>: &#123; <span class="comment">// 使用自定义loader</span></span><br><span class="line">        <span class="attr">rules</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                <span class="attr">use</span>: [loader1, loader2]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">plugins</span>: [ <span class="comment">// 使用自定义插件</span></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">WebpackRunPlugin</span>(),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">WebpackDonePlugin</span>()</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">output</span>: &#123; <span class="comment">// 打包文件输出路径</span></span><br><span class="line">        <span class="attr">path</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        <span class="attr">filename</span>: <span class="string">&#x27;[name].js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">devtool</span>: <span class="string">&#x27;source-map&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>src&#x2F;index.js</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> name = <span class="built_in">require</span>(<span class="string">&#x27;./name&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> age = <span class="built_in">require</span>(<span class="string">&#x27;./age&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;entry文件打印作者信息&#x27;</span>, name, age)</span><br></pre></td></tr></table></figure>
+
+<p><strong>src&#x2F;name.js</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="string">&#x27;f1ower1ang&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>src&#x2F;age.js</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="string">&#x27;88&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>依赖关系</strong></p>
+]]></content>
+      <categories>
+        <category>工程化</category>
+      </categories>
+      <tags>
+        <tag>wepback</tag>
+        <tag>手写webpack</tag>
       </tags>
   </entry>
 </search>

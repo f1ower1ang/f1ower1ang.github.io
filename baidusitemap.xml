@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://example.com/Webpack%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%8F%8A%E6%9C%89%E5%85%B3%E5%AE%9E%E7%8E%B0.html</loc>
+    <lastmod>2023-04-05</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/JS%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%A2%98.html</loc>
+    <lastmod>2023-04-04</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/Vue3.2-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93%E7%89%88%E6%9C%AC.html</loc>
+    <lastmod>2023-04-02</lastmod>
+  </url>
+</urlset> 

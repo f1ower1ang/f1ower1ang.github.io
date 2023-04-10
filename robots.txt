@@ -13,5 +13,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: https://www.linkinstars.com/sitemap.xml
-Sitemap: https://www.linkinstars.com/baidusitemap.xml
+Sitemap: https://f1ower1ang.top/sitemap.xml
+Sitemap: https://f1ower1ang.top/baidusitemap.xml

@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>JS常见手写题</title>
-    <url>/JS%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E9%A2%98.html</url>
+    <url>/undefined/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
 <p>本文主要对JS中常见的API以及其内部实现原理重新实现一遍，知其根本才能灵活的使用它们。</p>
 </blockquote>
@@ -68,7 +68,7 @@
   </entry>
   <entry>
     <title>Vue 3.2 响应式原理——手写简易版本</title>
-    <url>/Vue3.2-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93%E7%89%88%E6%9C%AC.html</url>
+    <url>/undefined/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
 <p>在进行正式阅读Vue3.2 响应式源码前，先来了解响应式的核心原理，并自己实现一个基础的响应式数据系统</p>
 </blockquote>
@@ -94,7 +94,7 @@
   </entry>
   <entry>
     <title>Webpack设计理念及有关实现</title>
-    <url>/Webpack%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%8F%8A%E6%9C%89%E5%85%B3%E5%AE%9E%E7%8E%B0.html</url>
+    <url>/undefined/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
 <p>前端工程化中，构建工具是核心，虽然目前已经有许多构建工具如vite、esbuild等，但由于webpack周边完善的生态，它仍然是一个主流的JS打包工具。为了更好的了解webpack，本文将依据webpack构建流程来实现一个简易的demo。</p>
 </blockquote>

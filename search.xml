@@ -248,12 +248,29 @@
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>本文从不具备响应式的数据作为切入点，到手写一个简单的响应式数据系统，为接下来的源码阅读打基础，下节则直接阅读源码，彻底掌握Vue3的响应式数据。</p>
 ]]></content>
       <categories>
-        <category>Vue源码</category>
+        <category>Vue系列源码</category>
       </categories>
       <tags>
         <tag>前端</tag>
         <tag>Vue</tag>
         <tag>Vue源码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简易版Vue Router实现</title>
+    <url>/a3bdff3d/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>前端路由管理在单页面应用中发挥着重要作用，单页面应用本质就是一个<code>index.html</code>，其路由的切换原理就是根据配置的路由信息替换有关页面组件，不同于传统的路由切换，单页面应用的路由切换不会刷新页面，因为不经过服务端。本文主要记录 Vue Router 核心原理，并手写核心功能。</p>
+</blockquote>
+<span id="more"></span>
+]]></content>
+      <categories>
+        <category>Vue系列源码</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>Vue</tag>
+        <tag>VueRouter源码</tag>
       </tags>
   </entry>
 </search>

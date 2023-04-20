@@ -419,4 +419,162 @@
         <tag>VueRouter源码</tag>
       </tags>
   </entry>
+  <entry>
+    <title>跟着React官网学习1--画页面</title>
+    <url>/11b19440/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>网上关于React的教程层出不穷，加上教学者的个人理解，对于初学者不太友好。当前React官网已经更新，里面的教程比较全面且权威，接下来本人将跟着官网从零开始学习React，并在学习过程中思考它和Vue3的区别。</p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="第一个组件"><a href="#第一个组件" class="headerlink" title="第一个组件"></a>第一个组件</h1><blockquote>
+<p>无论React还是Vue，它们的核心思想都是组件化，这是构建用户交互界面的基础。组件化的好处是抽离可复用的页面元素和交互逻辑，提高开发效率；另外这让单页面应用的路由切换不需要经过服务端处理，做到真正的前后端分离。</p>
+</blockquote>
+<p>不同于HTML，React组件除了可以使用HTML标签，还可以复用其他React组件，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;PageLayout&gt;</span><br><span class="line">  &lt;header&gt;</span><br><span class="line">  	&lt;SearchBar&gt;&lt;/SearchBar&gt;</span><br><span class="line">  &lt;/header&gt;</span><br><span class="line">  &lt;main&gt;</span><br><span class="line">  	&lt;PageContent&gt;&lt;/PageContent&gt;</span><br><span class="line">  &lt;/main&gt;</span><br><span class="line">&lt;/PageLayout&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义一个组件"><a href="#定义一个组件" class="headerlink" title="定义一个组件"></a>定义一个组件</h2><p>React为了接近原生开发体验，将页面交互逻辑和页面结构集成至js中，一个组件就是一个js方法，其写法如下：</p>
+<p><strong>Profile.js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export default function Profile() &#123;</span><br><span class="line">  return (</span><br><span class="line">  	&lt;img</span><br><span class="line">      src=&quot;https://i.imgur.com/MK3eW3Am.jpg&quot;</span><br><span class="line">      alt=&quot;Katherine Johnson&quot;</span><br><span class="line">    /&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出其主要包含三个步骤：</p>
+<ul>
+<li>使用<code>export</code>导出定义的组件</li>
+<li>使用<code>funciton</code>声明组件，其中函数名首字母大写</li>
+<li>在函数里面编写相应的交互逻辑，并最后返回标签元素</li>
+</ul>
+<p>需要注意的是：<strong>如果函数返回的内容超过一行，可使用括号包裹换行，否则会被忽略</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 这样写是正确的</span><br><span class="line">return (</span><br><span class="line">	&lt;div&gt;</span><br><span class="line">  	&lt;img src=&quot;test.jpg&quot;&gt;&lt;/img&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">)</span><br><span class="line">// 这样也行，最好还是第一种写法</span><br><span class="line">return &lt;div&gt;</span><br><span class="line">		&lt;img src=&quot;&quot;&gt;&lt;/img&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">// 这样是错误的</span><br><span class="line">return </span><br><span class="line">	&lt;div&gt;</span><br><span class="line">		&lt;img src=&quot;&quot;&gt;&lt;/img&gt;</span><br><span class="line">	&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用组件"><a href="#使用组件" class="headerlink" title="使用组件"></a>使用组件</h2><p>组件使用的方式有两种：</p>
+<ul>
+<li>在当前文件中定义一个组件，直接使用</li>
+<li>导入其他文件中定义的组件，然后使用</li>
+</ul>
+<p>前面已经在<code>Profile.js</code>中定义了一个组件并导出，我们可以将其导入并嵌入组件使用，例如当前组件需要展示多个<code>Profile</code>组件</p>
+<p><strong>App.js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入组件</span><br><span class="line">import Profile from &#x27;./Profile.js&#x27;</span><br><span class="line">export default function Gallery() &#123;</span><br><span class="line">  return (</span><br><span class="line">  	&lt;section&gt;</span><br><span class="line">    	&lt;h1&gt;Amazing scientists&lt;/h1&gt;</span><br><span class="line">      &lt;Profile /&gt;</span><br><span class="line">      &lt;Profile /&gt;</span><br><span class="line">      &lt;Profile /&gt;</span><br><span class="line">    &lt;/section&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用JSX编写标签"><a href="#使用JSX编写标签" class="headerlink" title="使用JSX编写标签"></a>使用JSX编写标签</h1><blockquote>
+<p>前面提过，React把编写页面标签的部分也放到js文件中，JSX发挥着重要作用，它是JavaScript的增强版，在支持js语法的同时，还能编写类HTML标签。</p>
+</blockquote>
+<h2 id="JSX：标签嵌入JavaScript"><a href="#JSX：标签嵌入JavaScript" class="headerlink" title="JSX：标签嵌入JavaScript"></a>JSX：标签嵌入JavaScript</h2><p>Web页面通常由HTML、CSS和JavaScript构成，HTML用来构建文档结构，CSS用来润色样式，JavaScript处理页面交互，它们由相应的标签引入到HTML文件中：</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/f1ower1ang/blogPicture@master/images/202304201859105.png" alt="image-20230420185917069"></p>
+<p>但随着页面功能越来越多，其结构杂糅混乱，后期较难维护。所以React把页面标签和交互操作统一由函数组件管理。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/f1ower1ang/blogPicture@master/images/202304201859653.png" alt="image-20230420185931619"></p>
+<h2 id="JSX语法规则"><a href="#JSX语法规则" class="headerlink" title="JSX语法规则"></a>JSX语法规则</h2><h3 id="返回单个根元素"><a href="#返回单个根元素" class="headerlink" title="返回单个根元素"></a>返回单个根元素</h3><p>如果组件返回多个元素，则需要用一个父元素将其包裹，比如可以使用<code>&lt;div&gt;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">	&lt;h1&gt;hello world&lt;/h1&gt;</span><br><span class="line">  &lt;img /&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果不想改变DOM结构，则可以使用空标签<code>&lt;&gt;&lt;/&gt;</code>，也被称为<code>Fragment</code>组件，它不会改变DOM树结构。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;&gt;</span><br><span class="line">	&lt;h1&gt;hello world&lt;/h1&gt;</span><br><span class="line">  &lt;img /&gt;</span><br><span class="line">&lt;/&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="闭合所有标签"><a href="#闭合所有标签" class="headerlink" title="闭合所有标签"></a>闭合所有标签</h3><p>JSX要求所有标签严格闭合：比如自闭和标签<code>&lt;img&gt;</code>必须写成<code>&lt;img /&gt;</code>，一般标签<code>&lt;li&gt;oranges</code>必须写成<code>&lt;li&gt;orange&lt;/li&gt;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;&gt;</span><br><span class="line">  &lt;img /&gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li&gt;Invent new traffic lights&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;Rehearse a movie scene&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;Improve the spectrum technology&lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="驼峰命名"><a href="#驼峰命名" class="headerlink" title="驼峰命名"></a>驼峰命名</h3><p>无论是在组件中定义变量还是给组件标签设置属性时，应使用驼峰命名。特殊的，给标签声明类名时应把<code>class</code>改为<code>className</code>，因为<code>class</code>为JavaScript的关键字，JSX转为JS时会将其转为对象，其中标签属性就是对象的属性名。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;img </span><br><span class="line">  src=&quot;https://i.imgur.com/yXOvdOSs.jpg&quot; </span><br><span class="line">  alt=&quot;Hedy Lamarr&quot; </span><br><span class="line">  className=&quot;photo&quot;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：由于历史原因，<code>aria-*</code>和<code>data-*</code>属性还是写成在HTML中的形式。</p>
+<h2 id="进阶：使用JSX转换器"><a href="#进阶：使用JSX转换器" class="headerlink" title="进阶：使用JSX转换器"></a>进阶：使用JSX转换器</h2><p>可以使用<a href="https://transform.tools/html-to-jsx">converter</a>批量转换HTML，这也有助于理解JSX语法规则。</p>
+<blockquote>
+<p>原生HTML</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hedy Lamarr&#x27;s Todos<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> </span></span><br><span class="line"><span class="tag">  <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/yXOvdOSs.jpg&quot;</span> </span></span><br><span class="line"><span class="tag">  <span class="attr">alt</span>=<span class="string">&quot;Hedy Lamarr&quot;</span> </span></span><br><span class="line"><span class="tag">  <span class="attr">class</span>=<span class="string">&quot;photo&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Invent new traffic lights</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Rehearse a movie scene</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Improve the spectrum technology</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用JSX转换器后的JSX</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;&gt;</span><br><span class="line">  &lt;h1&gt;Hedy Lamarr&#x27;s Todos&lt;/h1&gt;</span><br><span class="line">  &lt;img</span><br><span class="line">    src=&quot;https://i.imgur.com/yXOvdOSs.jpg&quot;</span><br><span class="line">    alt=&quot;Hedy Lamarr&quot;</span><br><span class="line">    className=&quot;photo&quot;</span><br><span class="line">  /&gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li&gt;Invent new traffic lights&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;Rehearse a movie scene&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;Improve the spectrum technology&lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="在JSX中加点JS代码"><a href="#在JSX中加点JS代码" class="headerlink" title="在JSX中加点JS代码"></a>在JSX中加点JS代码</h1><blockquote>
+<p>JS中可以使用JSX编写类HTML标记，页面渲染和交互逻辑可以同时处理。有时候可能还想在JSX加点JS代码或展示变量，这时候可以使用大括号包裹。</p>
+</blockquote>
+<p>在JSX中如果想给标签属性传入变量可以使用<code>&#123;&#125;</code>，比如我想给<code>img</code>标签的<code>src</code>和<code>alt</code>传值，具体如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export default function Avatar() &#123;</span><br><span class="line">  const avatar = &#x27;https://i.imgur.com/7vQD0fPs.jpg&#x27;;</span><br><span class="line">  const description = &#x27;Gregorio Y. Zara&#x27;;</span><br><span class="line">  return (</span><br><span class="line">    &lt;img</span><br><span class="line">      className=&quot;avatar&quot;</span><br><span class="line">      src=&#123;avatar&#125;</span><br><span class="line">      alt=&#123;description&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，如果传入引号包裹的内容，则值类型为字符串，值就是引号中的内容；而传入<code>&#123;&#125;</code>包裹的内容，值类型和变量有关，值执行变量的值。</p>
+<p>JSX不仅可以给标签属性传值，还可以给标签内容动态传值，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export default function TodoList() &#123;</span><br><span class="line">  const name = &#x27;Gregorio Y. Zara&#x27;</span><br><span class="line">  return &lt;h1&gt;&#123;name&#125;&#x27;s To Do List&lt;/h1&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以执行JS函数，获取函数返回值。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const today = new Date();</span><br><span class="line"></span><br><span class="line">function formatDate(date) &#123;</span><br><span class="line">  return new Intl.DateTimeFormat(</span><br><span class="line">    &#x27;en-US&#x27;,</span><br><span class="line">    &#123; weekday: &#x27;long&#x27; &#125;</span><br><span class="line">  ).format(date);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default function TodoList() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;h1&gt;To Do List for &#123;formatDate(today)&#125;&lt;/h1&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>需要注意的是</strong>：在JSX中编写行内行内样式得以对象的形式定义。比如我要自定义<code>&lt;ul&gt;</code>标签的行内样式，需写成以下形式（注意驼峰命名）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export default function TodoList() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;ul style=&#123;&#123;</span><br><span class="line">      backgroundColor: &#x27;black&#x27;,</span><br><span class="line">      color: &#x27;pink&#x27;</span><br><span class="line">    &#125;&#125;&gt;</span><br><span class="line">      &lt;li&gt;Improve the videophone&lt;/li&gt;</span><br><span class="line">      &lt;li&gt;Prepare aeronautics lectures&lt;/li&gt;</span><br><span class="line">      &lt;li&gt;Work on the alcohol-fuelled engine&lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的<code>&#123;&#123;&#125;&#125;</code>形式，本质上就是给<code>style</code>属性传入一个JS对象。</p>
+<h1 id="给组件传入Props"><a href="#给组件传入Props" class="headerlink" title="给组件传入Props"></a>给组件传入Props</h1><blockquote>
+<p>React组件使用props和其他组件进行通信。每个父组件可以通过props给子组件传递信息，从而完成父子组件通信。</p>
+</blockquote>
+<p>props就是传递给JSX标签的信息，比如可以给<code>img</code>设置<code>className</code>, <code>src</code>,<code>alt</code>,<code>width</code>等，这些就是props。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Avatar() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;img</span><br><span class="line">      className=&quot;avatar&quot;</span><br><span class="line">      src=&quot;https://i.imgur.com/1bX5QH6.jpg&quot;</span><br><span class="line">      alt=&quot;Lin Lanying&quot;</span><br><span class="line">      width=&#123;100&#125;</span><br><span class="line">      height=&#123;100&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这些传给<code>img</code>的props是预定义的，也可以传入任何自定义props到组件中，这通常包括两步：</p>
+<ol>
+<li><p>给子组件传入props</p>
+<p>比如我想给<code>Avatar</code>组件传入两个props：person（对象）和size（数字）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export default function Profile() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;Avatar</span><br><span class="line">      person=&#123;&#123; name: &#x27;Lin Lanying&#x27;, imageId: &#x27;1bX5QH6&#x27; &#125;&#125;</span><br><span class="line">      size=&#123;100&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子组件中读取props</p>
+<p>props会作为子组件函数的函数以对象的形式传入，可以直接解构使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Avatar(&#123; person, size &#125;) &#123;</span><br><span class="line">  // 这里可以使用 person 和 size</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="给prop设置默认值"><a href="#给prop设置默认值" class="headerlink" title="给prop设置默认值"></a>给prop设置默认值</h2><p>有时候使用组件时有默认的行为，这时可以给prop设置默认值，既不会破坏组件自定义也可以使用默认值。</p>
+<p>比如<code>Avatar</code>中的<code>size</code>默认为100，可以这样设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Avatar(&#123; person, size = 100 &#125;) &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用扩展运算符转发prop"><a href="#使用扩展运算符转发prop" class="headerlink" title="使用扩展运算符转发prop"></a>使用扩展运算符转发prop</h2><p>当组件props变多时，转发prop变得重复性，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Profile(&#123; person, size, isSepia, thickBorder &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&quot;card&quot;&gt;</span><br><span class="line">      &lt;Avatar</span><br><span class="line">        person=&#123;person&#125;</span><br><span class="line">        size=&#123;size&#125;</span><br><span class="line">        isSepia=&#123;isSepia&#125;</span><br><span class="line">        thickBorder=&#123;thickBorder&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以使用扩展运算符<code>...</code>简化操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Profile(props) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&quot;card&quot;&gt;</span><br><span class="line">      &lt;Avatar &#123;...props&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSX作为children传递"><a href="#JSX作为children传递" class="headerlink" title="JSX作为children传递"></a>JSX作为children传递</h2><p>HTML中标签套标签是比较常见的：<code>&lt;div&gt;&lt;img /&gt;&lt;/div&gt;</code>。</p>
+<p>JSX也可以实现组件的内嵌，它会被设置为<code>props.children</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import Avatar from &#x27;./Avatar.js&#x27;;</span><br><span class="line"></span><br><span class="line">function Card(&#123; children &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&quot;card&quot;&gt;</span><br><span class="line">      &#123;children&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default function Profile() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;Card&gt;</span><br><span class="line">      &lt;Avatar</span><br><span class="line">        size=&#123;100&#125;</span><br><span class="line">        person=&#123;&#123; </span><br><span class="line">          name: &#x27;Katsuko Saruhashi&#x27;,</span><br><span class="line">          imageId: &#x27;YfeOqp2&#x27;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">    &lt;/Card&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Vue中则是通过插槽（slot）实现。</p>
+<h1 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h1><blockquote>
+<p>组件中通常想根据不同条件展示不同内容。在React中，可以使用if语句、&amp;&amp;、三元运算符（? : ）来条件渲染JSX。</p>
+</blockquote>
+<h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Item(&#123; name, isPacked &#125;) &#123;</span><br><span class="line">  if (isPacked) &#123;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line">  return &lt;li className=&quot;item&quot;&gt;&#123;name&#125;&lt;/li&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default function PackingList() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;section&gt;</span><br><span class="line">      &lt;h1&gt;Sally Ride&#x27;s Packing List&lt;/h1&gt;</span><br><span class="line">      &lt;ul&gt;</span><br><span class="line">        &lt;Item </span><br><span class="line">          isPacked=&#123;true&#125; </span><br><span class="line">          name=&quot;Space suit&quot; </span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;Item </span><br><span class="line">          isPacked=&#123;true&#125; </span><br><span class="line">          name=&quot;Helmet with a golden leaf&quot; </span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;Item </span><br><span class="line">          isPacked=&#123;false&#125; </span><br><span class="line">          name=&quot;Photo of Tam&quot; </span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    &lt;/section&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="逻辑与-amp-amp"><a href="#逻辑与-amp-amp" class="headerlink" title="逻辑与 &amp;&amp;"></a>逻辑与 &amp;&amp;</h2><p>JSX中，<code>&#123;cond &amp;&amp; &lt;A /&gt;&#125;</code> 表示 <em>“如果 <code>cond</code> 为真, 渲染 <code>&lt;A /&gt;</code>, 否则为空”</em>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Item(&#123; name, isPacked &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;li className=&quot;item&quot;&gt;</span><br><span class="line">      &#123;name&#125; &#123;isPacked &amp;&amp; &#x27;✔&#x27;&#125;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三元运算符"><a href="#三元运算符" class="headerlink" title="三元运算符"></a>三元运算符</h2><p>JSX中, <code>&#123;cond ? &lt;A /&gt; : &lt;B /&gt;&#125;</code> 表示 <em>“如果 <code>cond</code> 为真, 渲染 <code>&lt;A /&gt;</code>, 否则渲染 <code>&lt;B /&gt;</code>”</em>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Item(&#123; name, isPacked &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;li className=&quot;item&quot;&gt;</span><br><span class="line">      &#123;isPacked ? (</span><br><span class="line">        &lt;del&gt;</span><br><span class="line">          &#123;name + &#x27; ✔&#x27;&#125;</span><br><span class="line">        &lt;/del&gt;</span><br><span class="line">      ) : (</span><br><span class="line">        name</span><br><span class="line">      )&#125;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="渲染列表"><a href="#渲染列表" class="headerlink" title="渲染列表"></a>渲染列表</h1><blockquote>
+<p>根据已有的数据渲染多个组件是常见的，我们可以使用JS中的数组方法来完成相应的组件渲染，在React中<code>filter()</code>和<code>map()</code>函数通常过滤数据，把数组中的数据转为组件。</p>
+</blockquote>
+<h2 id="从数组中批量渲染JSX"><a href="#从数组中批量渲染JSX" class="headerlink" title="从数组中批量渲染JSX"></a>从数组中批量渲染JSX</h2><p>比如我要把<code>people数组</code>的内容以<code>&lt;li&gt;</code>标签的形式展示出来，可以使用<code>map()</code>方法转换。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const people = [</span><br><span class="line">  &#x27;Creola Katherine Johnson: mathematician&#x27;,</span><br><span class="line">  &#x27;Mario José Molina-Pasquel Henríquez: chemist&#x27;,</span><br><span class="line">  &#x27;Mohammad Abdus Salam: physicist&#x27;,</span><br><span class="line">  &#x27;Percy Lavon Julian: chemist&#x27;,</span><br><span class="line">  &#x27;Subrahmanyan Chandrasekhar: astrophysicist&#x27;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">export default function List() &#123;</span><br><span class="line">  const listItems = people.map(person =&gt;</span><br><span class="line">    &lt;li&gt;&#123;person&#125;&lt;/li&gt;</span><br><span class="line">  );</span><br><span class="line">  return &lt;ul&gt;&#123;listItems&#125;&lt;/ul&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="过滤数组中非法数据"><a href="#过滤数组中非法数据" class="headerlink" title="过滤数组中非法数据"></a>过滤数组中非法数据</h2><p>可以先使用<code>filter()</code>方法得到需要展示的数据，然后用<code>map()</code>方法转换。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; people &#125; from &#x27;./data.js&#x27;;</span><br><span class="line">import &#123; getImageUrl &#125; from &#x27;./utils.js&#x27;;</span><br><span class="line"></span><br><span class="line">export default function List() &#123;</span><br><span class="line">  const chemists = people.filter(person =&gt;</span><br><span class="line">    person.profession === &#x27;chemist&#x27;</span><br><span class="line">  );</span><br><span class="line">  const listItems = chemists.map(person =&gt;</span><br><span class="line">    &lt;li&gt;</span><br><span class="line">      &lt;img</span><br><span class="line">        src=&#123;getImageUrl(person)&#125;</span><br><span class="line">        alt=&#123;person.name&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">      &lt;p&gt;</span><br><span class="line">        &lt;b&gt;&#123;person.name&#125;:&lt;/b&gt;</span><br><span class="line">        &#123;&#x27; &#x27; + person.profession + &#x27; &#x27;&#125;</span><br><span class="line">        known for &#123;person.accomplishment&#125;</span><br><span class="line">      &lt;/p&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  );</span><br><span class="line">  return &lt;ul&gt;&#123;listItems&#125;&lt;/ul&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="给JSX列表项设置key"><a href="#给JSX列表项设置key" class="headerlink" title="给JSX列表项设置key"></a>给JSX列表项设置<code>key</code></h2><p>在JSX中，key在列表项中作为唯一标识符，合理的设置key可以提升渲染性能。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;li key=&#123;person.id&#125;&gt;...&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+
+<p>之前提到过，JSX中需要用一个根标签包裹，比如<code>&lt;div&gt;</code>，也可以使用空标签<code>&lt;&gt;&lt;/&gt;</code>，不会改变DOM结构。在渲染列表时，由于要给列表项设置key，此时不能直接对<code>&lt;&gt;&lt;/&gt;</code>设置props，可以引入<code>&lt;Fragment&gt;</code>组件，达到相同的效果：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; Fragment &#125; from &#x27;react&#x27;;</span><br><span class="line"></span><br><span class="line">// ...</span><br><span class="line"></span><br><span class="line">const listItems = people.map(person =&gt;</span><br><span class="line">  &lt;Fragment key=&#123;person.id&#125;&gt;</span><br><span class="line">    &lt;h1&gt;&#123;person.name&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;&#123;person.bio&#125;&lt;/p&gt;</span><br><span class="line">  &lt;/Fragment&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><strong>需要注意的是</strong>：</p>
+<ul>
+<li>兄弟标签之间key必须是唯一的</li>
+<li>key必须是不可变的（不能这样设置：<code>&lt;li key=&#123;random()&#125;&gt;</code>，每次渲染时都会生成不同的key）</li>
+</ul>
+<h1 id="纯组件"><a href="#纯组件" class="headerlink" title="纯组件"></a>纯组件</h1><blockquote>
+<p>React中的组件为函数式组件，故纯组件也叫纯函数。纯函数仅执行计算，严格按照纯函数的标准声明组件可以避免一系列bug随着代码量增加。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>跟着官网学习React</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>React</tag>
+      </tags>
+  </entry>
 </search>

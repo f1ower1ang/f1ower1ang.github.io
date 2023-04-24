@@ -795,6 +795,46 @@
 <p>本文记录React官网第二章相关内容，给页面增加交互性。</p>
 </blockquote>
 <span id="more"></span>
+
+<h1 id="响应处理事件"><a href="#响应处理事件" class="headerlink" title="响应处理事件"></a>响应处理事件</h1><blockquote>
+<p>我们可以给JSX添加事件处理器，以此给响应相关事件如点击、hover、输入框聚焦等事件。</p>
+</blockquote>
+<p>React中无论是HTML内置的标签还是自定义组件，事件处理器都是通过props来传递，再由子组件触发，这为一个完整流程。</p>
+<p>因此，该过程主要分为两步：</p>
+<ul>
+<li>给子组件添加事件处理器</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export default function Button() &#123;</span><br><span class="line">  function handleClick() &#123;</span><br><span class="line">    alert(&#x27;You clicked me!&#x27;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;button onClick=&#123;handleClick&#125;&gt;</span><br><span class="line">      Click me</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>子组件获取事件处理器并在合适时机调用</li>
+</ul>
+<p>​	对应HTML内置标签会自动执行，如上面代码中给<code>onClick</code>传入的<code>handleClick</code>方法会在按钮点击时自动执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Button(&#123; onClick, children &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;button onClick=&#123;onClick&#125;&gt;</span><br><span class="line">      &#123;children&#125;</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line">export default function App() &#123;</span><br><span class="line">  return (</span><br><span class="line">  	&lt;div&gt;</span><br><span class="line">    	&lt;Button onClick=&#123;() =&gt; alert(&#x27;子组件按钮被点击&#x27;)&#125;&gt;子组件点击事件响应&lt;/Button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>父组件完成子组件相关事件响应是通过props来完成的，即子组件的事件名对应于props对象的属性名，所以子组件的事件名可以语义化。</p>
+<h2 id="事件冒泡"><a href="#事件冒泡" class="headerlink" title="事件冒泡"></a>事件冒泡</h2><p>DOM事件流有三个阶段：事件捕获、目标、事件冒泡。默认为事件冒泡，即由目标元素开始响应事件，一级一级向上依次完成相应事件响应。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/f1ower1ang/blogPicture@master/images/202304231915563.png" alt="img"></p>
+<p>在React中，会对事件处理函数传入一个事件对象作为参数，该对象中有一个方法<code>e.stopPropagation()</code>可以阻止事件冒泡。如果不想让事件冒泡，可以使用下面的方法阻止该行为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function Button(&#123; onClick, children &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;button onClick=&#123;e =&gt; &#123;</span><br><span class="line">      e.stopPropagation();</span><br><span class="line">      onClick();</span><br><span class="line">    &#125;&#125;&gt;</span><br><span class="line">      &#123;children&#125;</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="阻止默认行为"><a href="#阻止默认行为" class="headerlink" title="阻止默认行为"></a>阻止默认行为</h2><p>内置的HTML标签中，有些事件存在默认行为（form中submit后会导致页面刷新），这些行为和事件冒泡是两回事。要阻止默认行为可以执行<code>e.preventDefault()</code>，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export default function Signup() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;form onSubmit=&#123;e =&gt; &#123;</span><br><span class="line">      e.preventDefault();</span><br><span class="line">      alert(&#x27;Submitting!&#x27;);</span><br><span class="line">    &#125;&#125;&gt;</span><br><span class="line">      &lt;input /&gt;</span><br><span class="line">      &lt;button&gt;Send&lt;/button&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="状态是组件的内存"><a href="#状态是组件的内存" class="headerlink" title="状态是组件的内存"></a>状态是组件的内存</h1><blockquote>
+<p>随着页面产生交互，组件也会变化，如输入表单信息、添加商品至购物车等行为，相应变化的数据也应被记住，这些变化的数据统称为组件的状态。</p>
+</blockquote>
+<p>React组件是函数式组件，每次组件渲染时都会重新执行函数，若使用局部变量还保存组件数据，则会在组件渲染时重新初始化，另外，修改局部变量不会触发组件重新渲染。React提供一个hook——<code>useState</code>，它返回一个数组，包含两个成员：</p>
+<ul>
+<li>一个是state变量，维护着最新的组件数据</li>
+<li>一个是state setter函数，用于更新state变量并触发React重新渲染组件</li>
+</ul>
+<p><code>useState</code>使用方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; useState &#125; from &#x27;react&#x27;</span><br><span class="line">const [index, setIndex] = useState(0)</span><br><span class="line"></span><br><span class="line">// 更新index值</span><br><span class="line">setIndex(index + 1)</span><br><span class="line">// 或者（i为最新的index）</span><br><span class="line">setIndex(i =&gt; i + 1)</span><br></pre></td></tr></table></figure>
+
+<h2 id="React如何管理State"><a href="#React如何管理State" class="headerlink" title="React如何管理State"></a>React如何管理State</h2><p>在使用<code>useState</code>时，除了设置初始值，没有其他标识符对状态进行标记。React以一种较为巧妙的方式完成，hooks在同一个组件渲染时会以稳定的顺序执行，在React内部，会为每个组件设置一个数组，用来保存<code>useState</code>返回值，下次组件渲染，再根据<code>useState</code>的执行顺序，返回对应数组子项。简易实现代码如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> componentHooks = [] <span class="comment">// 保存当前组件所有useState的返回值</span></span><br><span class="line"><span class="keyword">let</span> currentHookIndex = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">useState</span>(<span class="params">initialState</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> pair = componentHooks[currentHookIndex] <span class="comment">// [state, setState]</span></span><br><span class="line">  <span class="keyword">if</span> (pair) &#123; <span class="comment">// 组件不是第一次渲染</span></span><br><span class="line">    currentHookIndex++</span><br><span class="line">    <span class="keyword">return</span> pair</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 组件首次渲染</span></span><br><span class="line">  pair = [initialState, setState]</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">setState</span>(<span class="params">nextState</span>) &#123;</span><br><span class="line">    pair[<span class="number">0</span>] = nextState</span><br><span class="line">    <span class="comment">// 触发组件更新</span></span><br><span class="line">    <span class="title function_">updateDOM</span>()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 把useState返回值保存下来</span></span><br><span class="line">  componentHooks[currentHookIndex++] = pair</span><br><span class="line">  <span class="keyword">return</span> pair</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>跟着官网学习React</category>
